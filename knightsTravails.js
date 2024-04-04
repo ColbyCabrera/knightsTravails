@@ -9,14 +9,10 @@ class Node {
 function knightMoves(start, end) {
   if (arraysEqual(start, end)) return "Same square.";
   if (
-    start[0] < 0 ||
-    start[0] > 7 ||
-    end[0] < 0 ||
-    end[0] > 7 ||
-    start[1] < 0 ||
-    start[1] > 7 ||
-    end[1] < 0 ||
-    end[1] > 7
+    isOutOfBounds(start[0]) ||
+    isOutOfBounds(end[0]) ||
+    isOutOfBounds(start[1]) ||
+    isOutOfBounds(end[1])
   ) {
     return "Coordinates out of bounds.";
   }
@@ -83,12 +79,9 @@ function legalMoves(square) {
     [square[0] - 1, square[1] + 2],
   ];
 
-  let legalMoves = allMoves.filter((arr) => {
-    let inbounds0 = arr[0] >= 0 && arr[0] < 8;
-    let inbounds1 = arr[1] >= 0 && arr[1] < 8;
-
-    return inbounds0 && inbounds1;
-  });
+  let legalMoves = allMoves.filter(
+    (arr) => !isOutOfBounds(arr[0]) && !isOutOfBounds(arr[1])
+  );
 
   return legalMoves;
 }
@@ -102,6 +95,10 @@ function arraysEqual(a, b) {
     if (a[i] !== b[i]) return false;
   }
   return true;
+}
+
+function isOutOfBounds(coord) {
+  return coord < 0 || coord > 7;
 }
 
 console.log(knightMoves([3, 3], [4, 3]));
