@@ -53,7 +53,6 @@ function knightMoves(start, end) {
     // Prepare next iteration by getting moves
     currentNode = queue.shift();
     let nonVisited = legalMoves(currentNode.data).filter((move) => {
-      console.log(visited.has(move.toString()));
       return !visited.has(move);
     });
 
